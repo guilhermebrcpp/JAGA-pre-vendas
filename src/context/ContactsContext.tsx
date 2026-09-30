@@ -64,6 +64,7 @@ export function ContactsProvider({ children }: { children: ReactNode }) {
     );
 }
 
+
 export function useContacts() {
     const ctx = useContext(ContactsContext);
     if (!ctx) throw new Error("useContacts deve ser usado dentro de ContactsProvider");
