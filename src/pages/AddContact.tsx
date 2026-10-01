@@ -11,7 +11,7 @@ function AddContact() {
         <div>
             <DashBoard></DashBoard>
             <div style={{ overflow: "auto", height: "100vh", border: "3px solid black", padding: "2rem" }}>
-                <h1 style={{ marginBottom: "1.5rem" }}>Adicionar contato</h1>
+                <h1 style={{ marginBottom: "1.5rem" }}>Adicionar cliente</h1>
                 <ContactForm
                     submitLabel="Salvar contato"
                     onSubmit={data => {

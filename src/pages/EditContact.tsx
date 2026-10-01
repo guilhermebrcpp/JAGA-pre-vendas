@@ -14,7 +14,7 @@ function EditContact() {
         <div>
             <DashBoard></DashBoard>
             <div style={{ overflow: "auto", height: "100vh", border: "3px solid black", padding: "2rem" }}>
-                <h1 style={{ marginBottom: "1.5rem" }}>Editar contato</h1>
+                <h1 style={{ marginBottom: "1.5rem" }}>Editar cliente</h1>
                 {contact ? (
                     <ContactForm
                         initialValues={{ name: contact.name, email: contact.email, phone: contact.phone, company: contact.company, notes: contact.notes }}

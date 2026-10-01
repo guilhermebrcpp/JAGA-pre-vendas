@@ -21,9 +21,9 @@ type ContactsContextType = {
 const STORAGE_KEY = "jaga-contacts";
 
 const seed: Contact[] = [
-    { id: "1", name: "Rei Ayanami", email: "rei@nerv.jp", phone: "(11) 91234-5678", company: "NERV", notes: "" },
-    { id: "2", name: "Alice Margatroid", email: "alice@gensokyo.jp", phone: "(11) 98765-4321", company: "Forest of Magic", notes: "" },
-    { id: "3", name: "Asuka Langley", email: "asuka@nerv.jp", phone: "(11) 95555-0000", company: "NERV", notes: "" },
+    { id: "1", name: "Google", email: "google@gmail.com", phone: "(11) 91234-5678", company: "00.623.904/0001-73", notes: "" },
+    { id: "2", name: "Valve", email: "gaben@valvesoftware.com", phone: "(11) 98765-4321", company: "00.623.904/0001-73", notes: "" },
+    { id: "3", name: "CKMT", email: "ckmtcontact@ckmt.com", phone: "(11) 95555-0000", company: "00.623.904/0001-73", notes: "" },
 ];
 
 function load(): Contact[] {

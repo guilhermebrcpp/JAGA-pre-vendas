@@ -47,7 +47,7 @@ function ContactForm({ initialValues = empty, submitLabel, onSubmit }: ContactFo
                     <input className="form-control jaga-input" value={values.phone} onChange={e => set("phone", e.target.value)} />
                 </div>
                 <div className="col mb-3">
-                    <label className="form-label fw-bold">Empresa</label>
+                    <label className="form-label fw-bold">CNPJ</label>
                     <input className="form-control jaga-input" value={values.company} onChange={e => set("company", e.target.value)} />
                 </div>
             </div>

@@ -12,7 +12,7 @@ function Clients(){
             <div style={{overflow:"auto", height:"100vh", border:"3px solid black", padding:"2rem"}}>
                 <div style={{display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:"1.5rem"}}>
                     <h1 style={{margin:0}}>Clientes</h1>
-                    <Link to="/clientes/novo" className="jaga-btn">+ Adicionar contato</Link>
+                    <Link to="/clientes/novo" className="jaga-btn">+ Adicionar cliente</Link>
                 </div>
 
                 {contacts.length === 0 && <p>Nenhum contato cadastrado ainda.</p>}
