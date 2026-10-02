@@ -1,0 +1,29 @@
+/* Mesmo visual dos botões do menu lateral: branco, borda preta 3px, hover cinza */
+.jaga-btn {
+    background-color: white;
+    color: black;
+    font-family: arial;
+    font-weight: 700;
+    border: 3px solid black;
+    padding: 0.4rem 1.2rem;
+    text-decoration: none;
+    display: inline-block;
+    cursor: pointer;
+}
+
+.jaga-btn:hover {
+    background-color: grey;
+    color: black;
+}
+
+/* Mesmo card cinza-claro arredondado da HomePage */
+.jaga-card {
+    border: 3px solid rgb(215, 215, 215);
+    border-radius: 1rem;
+    padding: 1rem;
+}
+
+.form-control.jaga-input {
+    border: 3px solid black;
+    border-radius: 0;
+}

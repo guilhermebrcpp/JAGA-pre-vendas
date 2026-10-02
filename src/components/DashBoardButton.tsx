@@ -7,8 +7,9 @@ type DashBoardButtonProps = {
 };
 
 function DashBoardButton({title, link}: DashBoardButtonProps){
+    // style={{border:"3px solid black"}} 
     return(
-        <div style={{border:"3px solid black"}} className="dashboardbutton">
+        <div className="dashboardbutton">
             <Link to={link} style={{textDecoration:"none"}}>
                 <p style={{fontFamily:"arial"}} className="DashBoardButtonText">{title}</p>
             </Link>
