@@ -12,8 +12,8 @@ function DashBoard(){
             <hr></hr>
             <DashBoardButton title="HomePage" link="/"></DashBoardButton>
             <DashBoardButton title="Clientes" link="/clientes"></DashBoardButton>
-            <DashBoardButton title="Projetos" link="/"></DashBoardButton>
-            <DashBoardButton title="Chamados" link="/"></DashBoardButton>
+            <DashBoardButton title="Projetos" link="/projetos"></DashBoardButton>
+            <DashBoardButton title="Chamados" link="/chamados"></DashBoardButton>
             <hr></hr>
             <DashBoardButton title="Configurações" link="/"></DashBoardButton>
 

@@ -21,3 +21,7 @@
     background-color: grey;
     border-radius: 0.25rem 0.25rem 0.25rem 0.25rem;
 }
+
+.chamado_button:hover{
+    background-color: grey;
+}
