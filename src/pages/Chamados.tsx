@@ -1,65 +1,36 @@
-import { Link, useNavigate, useParams } from "react-router-dom";
-import DashBoard from "../components/DashBoard";
-import ContactForm from "../components/ContactForm";
-import { useContacts } from "../context/ContactsContext";
+import Layout from "../components/Layout";
+import { colors } from "../theme/colors";
+
+type Chamado = { title: string; date: string };
+
+// TODO: trocar por dados reais quando houver backend
+const chamados: Chamado[] = [
+    { title: "Análise de projeto para ONG que resgata animais", date: "25/01/2027" },
+    { title: "Desenvolvimento de plataforma para gestão de clínicas veterinárias", date: "03/02/2027" },
+    { title: "Modernização do sistema interno de empresa de logística", date: "17/02/2027" },
+    { title: "Criação de aplicativo para rede de restaurantes", date: "28/02/2027" },
+    { title: "Planejamento de sistema de atendimento para instituição de ensino", date: "12/03/2027" },
+    { title: "Levantamento de requisitos para plataforma de gestão financeira", date: "26/03/2027" },
+];
 
 function Chamados() {
-    /*
-    border: 3px solid rgb(215, 215, 215);
-    border-radius: 1rem;
-    padding: 1rem;
-    */
-    return(
-        <div>
-            <DashBoard></DashBoard>
-            <div style={{overflow:"auto", height:"100vh", border:"3px solid black", padding:"2rem", paddingTop:"1rem"}}>
-                <div>
-                    {/* TODO: CRIAR COMPONENTE PROJETO*/}
-                    <div className="chamado_button" style={{border:"3px solid rgb(215, 215, 215)", borderRadius:"1rem", padding:"1rem", display:"flex", marginBottom:"1.5rem"}}>
-                        Análise de projeto para ONG que resgata animais
-                        <div style={{marginLeft:"auto"}}>
-                            25/01/2027
-                        </div>
-                    </div>
-
-                    <div className="chamado_button" style={{border:"3px solid rgb(215, 215, 215)", borderRadius:"1rem", padding:"1rem", display:"flex", marginBottom:"1.5rem"}}>
-                        Desenvolvimento de plataforma para gestão de clínicas veterinárias
-                        <div style={{marginLeft:"auto"}}>
-                            03/02/2027
-                        </div>
-                    </div>
-
-                    <div className="chamado_button" style={{border:"3px solid rgb(215, 215, 215)", borderRadius:"1rem", padding:"1rem", display:"flex", marginBottom:"1.5rem"}}>
-                        Modernização do sistema interno de empresa de logística
-                        <div style={{marginLeft:"auto"}}>
-                            17/02/2027
-                        </div>
-                    </div>
-
-                    <div className="chamado_button" style={{border:"3px solid rgb(215, 215, 215)", borderRadius:"1rem", padding:"1rem", display:"flex", marginBottom:"1.5rem"}}>
-                        Criação de aplicativo para rede de restaurantes
-                        <div style={{marginLeft:"auto"}}>
-                            28/02/2027
-                        </div>
-                    </div>
-
-                    <div className="chamado_button" style={{border:"3px solid rgb(215, 215, 215)", borderRadius:"1rem", padding:"1rem", display:"flex", marginBottom:"1.5rem"}}>
-                        Planejamento de sistema de atendimento para instituição de ensino
-                        <div style={{marginLeft:"auto"}}>
-                            12/03/2027
-                        </div>
-                    </div>
-
-                    <div className="chamado_button" style={{border:"3px solid rgb(215, 215, 215)", borderRadius:"1rem", padding:"1rem", display:"flex", marginBottom:"1.5rem"}}>
-                        Levantamento de requisitos para plataforma de gestão financeira
-                        <div style={{marginLeft:"auto"}}>
-                            26/03/2027
-                        </div>
-                    </div>
-                </div>
+    return (
+        <Layout title="Chamados">
+            <div className="page-actions">
+                <p className="page-subtitle">Chamados recentes</p>
             </div>
-        </div>
-    )
+
+            <div className="card list-card">
+                {chamados.map(c => (
+                    <div className="list-row interactive" key={c.title}>
+                        <span className="dot" style={{ backgroundColor: colors.primary }} />
+                        <span className="list-main">{c.title}</span>
+                        <span className="list-date">{c.date}</span>
+                    </div>
+                ))}
+            </div>
+        </Layout>
+    );
 }
 
 export default Chamados;

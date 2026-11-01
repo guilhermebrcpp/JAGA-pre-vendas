@@ -1,41 +1,41 @@
 import { Link } from "react-router-dom";
-import DashBoard from "../components/DashBoard";
+import Layout from "../components/Layout";
+import Icon from "../components/Icon";
 import { useContacts } from "../context/ContactsContext";
-import "../css/Contacts.css";
 
-function Clients(){
+function Clients() {
     const { contacts } = useContacts();
 
-    return(
-        <div>
-            <DashBoard></DashBoard>
-            <div style={{overflow:"auto", height:"100vh", border:"3px solid black", padding:"2rem"}}>
-                <div style={{display:"flex", justifyContent:"space-between", alignItems:"center", marginBottom:"1.5rem"}}>
-                    <h1 style={{margin:0}}>Clientes</h1>
-                    <Link to="/clientes/novo" className="jaga-btn">+ Adicionar cliente</Link>
-                </div>
-
-                {contacts.length === 0 && <p>Nenhum contato cadastrado ainda.</p>}
-
-                <div className="row g-3">
-                    {contacts.map(c => (
-                        <div className="col-12 col-lg-6 col-xl-4" key={c.id}>
-                            <div className="jaga-card" style={{height:"100%", display:"flex", flexDirection:"column", justifyContent:"space-between"}}>
-                                <div style={{marginBottom:"1rem"}}>
-                                    <h2 style={{fontSize:"1.4rem"}}>{c.name}</h2>
-                                    {c.company && <p style={{fontWeight:500, marginBottom:"0.25rem"}}>{c.company}</p>}
-                                    {c.email && <p style={{marginBottom:"0.25rem"}}>{c.email}</p>}
-                                    {c.phone && <p style={{marginBottom:0}}>{c.phone}</p>}
-                                </div>
-                                <div>
-                                    <Link to={`/clientes/${c.id}/editar`} className="jaga-btn">Editar</Link>
-                                </div>
-                            </div>
-                        </div>
-                    ))}
-                </div>
+    return (
+        <Layout title="Clientes">
+            <div className="page-actions">
+                <p className="page-subtitle">Clientes cadastrados</p>
+                <Link to="/clientes/novo" className="btn btn-primary">
+                    <Icon name="personAdd" size={18} />
+                    Novo cliente
+                </Link>
             </div>
-        </div>
+
+            <div className="card list-card">
+                {contacts.length === 0 && (
+                    <p className="empty">Nenhum cliente cadastrado ainda. Use “Novo cliente” para começar.</p>
+                )}
+
+                {contacts.map(c => (
+                    <div className="list-row" key={c.id}>
+                        <div className="avatar">{c.name.charAt(0).toUpperCase()}</div>
+                        <div className="list-main">
+                            <div className="list-title">{c.name}</div>
+                            <div className="list-sub">{[c.company, c.email].filter(Boolean).join(" • ")}</div>
+                        </div>
+                        {c.phone && <span className="list-trailing">{c.phone}</span>}
+                        <Link to={`/clientes/${c.id}/editar`} className="icon-btn" aria-label={`Editar ${c.name}`} title="Editar">
+                            <Icon name="edit" size={18} />
+                        </Link>
+                    </div>
+                ))}
+            </div>
+        </Layout>
     );
 }
 

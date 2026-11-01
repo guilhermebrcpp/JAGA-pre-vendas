@@ -1,8 +1,7 @@
 import { Link, useNavigate, useParams } from "react-router-dom";
-import DashBoard from "../components/DashBoard";
+import Layout from "../components/Layout";
 import ContactForm from "../components/ContactForm";
 import { useContacts } from "../context/ContactsContext";
-import "../css/Contacts.css";
 
 function EditContact() {
     const { id } = useParams();
@@ -11,27 +10,28 @@ function EditContact() {
     const contact = id ? getContact(id) : undefined;
 
     return (
-        <div>
-            <DashBoard></DashBoard>
-            <div style={{ overflow: "auto", height: "100vh", border: "3px solid black", padding: "2rem" }}>
-                <h1 style={{ marginBottom: "1.5rem" }}>Editar cliente</h1>
-                {contact ? (
-                    <ContactForm
-                        initialValues={{ name: contact.name, email: contact.email, phone: contact.phone, company: contact.company, notes: contact.notes }}
-                        submitLabel="Salvar alterações"
-                        onSubmit={data => {
-                            updateContact(contact.id, data);
-                            navigate("/clientes");
-                        }}
-                    />
-                ) : (
-                    <div>
-                        <p>Contato não encontrado.</p>
-                        <Link to="/clientes" className="jaga-btn">Voltar</Link>
+        <Layout title="Clientes">
+            {contact ? (
+                <ContactForm
+                    title="Editar cliente"
+                    subtitle="Atualize os dados do cliente"
+                    initialValues={{ name: contact.name, email: contact.email, phone: contact.phone, company: contact.company, notes: contact.notes }}
+                    submitLabel="Salvar alterações"
+                    onSubmit={data => {
+                        updateContact(contact.id, data);
+                        navigate("/clientes");
+                    }}
+                />
+            ) : (
+                <div className="card form-card">
+                    <h2 className="card-heading">Cliente não encontrado</h2>
+                    <p className="card-description">Esse cadastro não existe mais. Volte para a lista e escolha outro cliente.</p>
+                    <div className="form-actions" style={{ justifyContent: "flex-start" }}>
+                        <Link to="/clientes" className="btn btn-primary">Voltar para clientes</Link>
                     </div>
-                )}
-            </div>
-        </div>
+                </div>
+            )}
+        </Layout>
     );
 }
 

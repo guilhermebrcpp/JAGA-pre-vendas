@@ -1,69 +1,58 @@
-import { Link, useNavigate, useParams } from "react-router-dom";
-import DashBoard from "../components/DashBoard";
-import ContactForm from "../components/ContactForm";
-import { useContacts } from "../context/ContactsContext";
+import Layout from "../components/Layout";
+import Pill from "../components/Pill";
+import { statusColors, typeColors } from "../theme/colors";
+
+type Project = {
+    title: string;
+    description: string;
+    status: string;
+    company: string;
+    type: string;
+};
+
+// TODO: trocar por dados reais quando houver backend
+const projects: Project[] = [
+    {
+        title: "CKMT Security Website",
+        description: "Um fórum para empresas pequenas e médias sobre segurança",
+        status: "Pausado",
+        company: "CKMT™",
+        type: "Website",
+    },
+    {
+        title: "Gestão Alpha Solutions",
+        description: "Sistema de gerenciamento de estoque",
+        status: "Em andamento",
+        company: "Alpha Solutions",
+        type: "Sistema de Gestão",
+    },
+];
 
 function Projects() {
-    /*
-    border: 3px solid rgb(215, 215, 215);
-    border-radius: 1rem;
-    padding: 1rem;
-    */
-    return(
-        <div>
-            <DashBoard></DashBoard>
-            <div style={{overflow:"auto", height:"100vh", border:"3px solid black", padding:"2rem", paddingTop:"1rem"}}>
-                <div>
-                    {/* TODO: CRIAR COMPONENTE PROJETO*/}
-                    <div style={{border:"3px solid rgb(215, 215, 215)", borderRadius:"1rem", padding:"1rem", display:"flex", marginBottom:"1.5rem"}}>
-                        <div style={{paddingRight:"auto"}}>
-                            <h1>CKMT Security Website</h1>
-                            <hr></hr>
-                            <h5 style={{display:"inline"}}>Descrição: </h5>
-                            <p style={{display:"inline"}}>Um fórum para empresas pequenas e médias sobre segurança</p>
-                            <div style={{display:"inline", marginLeft:"1rem"}}>
-                                <h5 style={{display:"inline"}}>Status: </h5>
-                                <p style={{display:"inline", color:"GoldenRod", fontWeight:"700"}}>Pausado</p>
-                            </div>
-                        </div>
-                        {/* Nome da empresa e tag */}
-                        <div style={{display:"flex", marginLeft:"auto"}}>
-                            <div style={{borderLeft:"1px solid LightGray", marginLeft:"2rem", marginRight:"2rem"}}></div>
-                            <div style={{}}>
-                                <h1 style={{display:"block"}}>CKMT™</h1>
-                                <h5 style={{display:"block", backgroundColor:"#66FF99", textAlign:"center", marginTop:"2.5rem"}}>Website</h5>
-                            </div>
-                        </div>
-                    </div>
-
-                    {/* TODO: CRIAR COMPONENTE PROJETO*/}
-                    <div style={{border:"3px solid rgb(215, 215, 215)", borderRadius:"1rem", padding:"1rem", display:"flex", marginBottom:"1.5rem"}}>
-                        <div style={{paddingRight:"auto", marginRight:"auto"}}>
-                            <h1>Gestão Alpha Solutions</h1>
-                            <hr></hr>
-                            <h5 style={{display:"inline"}}>Descrição: </h5>
-                            <p style={{display:"inline"}}>Sistema de gerenciamento de estoque</p>
-                            <div style={{display:"inline", marginLeft:"1rem"}}>
-                                <h5 style={{display:"inline"}}>Status: </h5>
-                                <p style={{display:"inline", color:"green", fontWeight:"700"}}>Em andamento</p>
-                            </div>
-                        </div>
-                        {/* Nome da empresa e tag */}
-                        <div style={{display:"flex", marginLeft:"auto"}}>
-                            <div style={{borderLeft:"1px solid LightGray", marginLeft:"2rem", marginRight:"2rem"}}></div>
-                            <div>
-                                <h1 style={{display:"block"}}>Alpha Solutions</h1>
-                                <h5 style={{display:"block", backgroundColor:"orange", textAlign:"center", marginTop:"2.5rem"}}>Sistema Gestão</h5>
-                            </div>
-                        </div>
-                    </div>
-
-                    
-
-                </div>
+    return (
+        <Layout title="Projetos">
+            <div className="page-actions">
+                <p className="page-subtitle">Projetos cadastrados</p>
             </div>
-        </div>
-    )
+
+            {projects.map(p => (
+                <div className="card project-card" key={p.title}>
+                    <div className="project-main">
+                        <h2 className="project-title">{p.title}</h2>
+                        <p className="project-desc">{p.description}</p>
+                        <div className="project-meta">
+                            <span>Status</span>
+                            <Pill label={p.status} color={statusColors[p.status]} />
+                        </div>
+                    </div>
+                    <div className="project-side">
+                        <span className="project-client">{p.company}</span>
+                        <Pill label={p.type} color={typeColors[p.type]} />
+                    </div>
+                </div>
+            ))}
+        </Layout>
+    );
 }
 
 export default Projects;

@@ -1,172 +1,173 @@
-import DashBoard from "../components/DashBoard";
-import {Line, Bar, Pie} from "react-chartjs-2";
-import "../context/ContactsContext.tsx";
+import { Line, Doughnut } from "react-chartjs-2";
 import {
-    Chart as ChartJS, 
-    CategoryScale, 
-    LinearScale, 
-    PointElement, 
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    PointElement,
     LineElement,
-    BarElement,
-    Title, 
-    Tooltip, 
-    Legend,
-    ArcElement
-} from "chart.js"
-import { ContactsProvider, useContacts } from "../context/ContactsContext.tsx";
-
-ChartJS.register(
-    CategoryScale, 
-    LinearScale, 
-    PointElement, 
-    LineElement, 
     ArcElement,
-    BarElement,
-    Title, 
-    Tooltip, 
-    Legend
-);
+    Tooltip,
+    Filler,
+} from "chart.js";
+import Layout from "../components/Layout";
+import KpiCard from "../components/KpiCard";
+import Pill from "../components/Pill";
+import { colors, statusColors, typeColors } from "../theme/colors";
 
-const data = {
-  labels: ['Website', 'Sistema de Gestão', 'Segurança'],
-  datasets: [
-    {
-      label: '# de projetos',
-      data: [19, 12, 3],
-      backgroundColor: [
-        'rgb(43, 145, 213)',
-        'rgb(255, 207, 86)',
-        'rgb(255, 99, 133)',
-      ]
-    },
-  ],
+ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, ArcElement, Tooltip, Filler);
+
+const projectTypes = [
+    { label: "Website", value: 19 },
+    { label: "Sistema de Gestão", value: 12 },
+    { label: "Segurança", value: 3 },
+];
+const projectTypesTotal = projectTypes.reduce((sum, t) => sum + t.value, 0);
+
+const donutData = {
+    labels: projectTypes.map(t => t.label),
+    datasets: [
+        {
+            label: "# de projetos",
+            data: projectTypes.map(t => t.value),
+            backgroundColor: projectTypes.map(t => typeColors[t.label]),
+            borderWidth: 0,
+        },
+    ],
 };
 
-const dataLine = {
-  labels: ['Julho', "Agosto", "Setembro", "Outubro"],
-  datasets: [
-    {
-      label: 'Clientes Novos',
-      data: [5, 12, 8, 6],
-      backgroundColor: [
-        'rgb(43, 145, 213)'
-      ]
-    },
-  ],
+const donutOptions = {
+    maintainAspectRatio: false,
+    cutout: "72%",
+    plugins: { legend: { display: false } },
 };
 
+const lineData = {
+    labels: ["Julho", "Agosto", "Setembro", "Outubro"],
+    datasets: [
+        {
+            label: "Chamados novos",
+            data: [5, 12, 8, 6],
+            borderColor: colors.primary,
+            backgroundColor: `${colors.primary}1F`,
+            borderWidth: 2.5,
+            fill: true,
+            tension: 0,
+            pointRadius: 3.2,
+            pointBackgroundColor: colors.primary,
+        },
+    ],
+};
 
-function HomePage(){
-    const {contacts} = useContacts();
-    const frase = contacts[0].name;
-    const clients_total_count = contacts.length;
+const lineOptions = {
+    maintainAspectRatio: false,
+    plugins: { legend: { display: false } },
+    scales: {
+        x: { grid: { display: false }, ticks: { color: "rgba(0,0,0,0.54)" } },
+        y: {
+            beginAtZero: true,
+            border: { display: false },
+            grid: { color: "rgba(0,0,0,0.05)" },
+            ticks: { color: "rgba(0,0,0,0.54)", precision: 0 },
+        },
+    },
+};
 
-    return(
-        <div>
-            <ContactsProvider>
-                <DashBoard></DashBoard>
-                <div style={{overflow:"auto", height:"100vh", border:"3px solid black", padding:"2rem", paddingTop:"1rem"}}>
-                    
-                    <div className="row">
-                        <div className="col">
-                            <div style={{display:"flex", justifyContent:"space-evenly"}}>
-                                <div style={{display:"inline-block"}}>
-                                    <h1>Clientes</h1>
-                                    <h3 style={{textAlign:"center"}}>5</h3>
-                                </div>
-                                <div style={{display:"inline-block"}}>
-                                    <h1>Projetos</h1>
-                                    <h3 style={{textAlign:"center"}}>9</h3>
-                                </div>
-                                <div style={{display:"inline-block"}}>
-                                    <h1>Atrasados</h1>
-                                    <h3 style={{textAlign:"center"}}>2</h3>
-                                </div>
-                                <div style={{display:"inline-block"}}>
-                                    <h1>Receita</h1>
-                                    <h3 style={{textAlign:"center"}}>R$35.000,00</h3>
-                                </div>
-                            </div>
-                        </div>
+type Row = {
+    project: string;
+    client: string;
+    type: string;
+    progress: number;
+    deadline: string;
+    status: string;
+};
+
+const ongoing: Row[] = [
+    { project: "Portal Corporativo", client: "NovaTech", type: "Website", progress: 15, deadline: "12/10/2026", status: "Em andamento" },
+    { project: "Sistema de Gestão", client: "Alpha Solutions", type: "Sistema de Gestão", progress: 92, deadline: "18/10/2026", status: "Em andamento" },
+    { project: "Segurança de Rede", client: "CKMT Corp.", type: "Segurança", progress: 52, deadline: "08/10/2026", status: "Pausado" },
+    { project: "Loja Virtual", client: "Orion Commerce", type: "Website", progress: 66, deadline: "02/11/2026", status: "Planejamento" },
+    { project: "Gestão de Estoque", client: "BluePeak", type: "Sistema de Gestão", progress: 67, deadline: "15/11/2026", status: "Não iniciado" },
+];
+
+function HomePage() {
+    return (
+        <Layout title="Dashboard">
+            <div className="page-actions">
+                <p className="page-subtitle">Visão geral dos projetos</p>
+            </div>
+
+            <div className="kpi-grid">
+                <KpiCard title="Clientes" value="5" icon="people" color={colors.primary} />
+                <KpiCard title="Projetos" value="9" icon="folder" color={colors.info} />
+                <KpiCard title="Atrasados" value="2" icon="schedule" color={colors.danger} footer="Requerem atenção imediata" />
+                <KpiCard title="Receita" value="R$35.000,00" icon="money" color={colors.success} />
+            </div>
+
+            <div className="chart-grid">
+                <div className="card">
+                    <h2 className="card-title">Chamados novos por mês</h2>
+                    <div className="chart-box">
+                        <Line data={lineData} options={lineOptions} />
                     </div>
-                    <hr></hr>
-                    <div className="row">
-                        <div className="col">
-                            <div>
-                                <h3 style={{textAlign:"center"}}>Tipos de Projeto</h3>
-                                <div style={{width:"25rem", height:"15rem", margin:"0 auto"}}>
-                                    <Pie data={data} options={{maintainAspectRatio: false, plugins: { legend: { position: 'right' }}}}></Pie>
-                                </div>
-                            </div>
+                </div>
+
+                <div className="card">
+                    <h2 className="card-title">Tipos de projeto</h2>
+                    <div className="donut-wrap">
+                        <div className="donut">
+                            <Doughnut data={donutData} options={donutOptions} />
+                            <div className="donut-total">{projectTypesTotal}</div>
                         </div>
-                        <div className="col" style={{display:"flex", alignItems:"center", justifyContent:"center"}}>
-                            <div>
-                                <h3 style={{textAlign:"center"}}>Chamados novos por mês</h3>
-                                <div style={{width:"30rem", height:"15rem", margin:"0 auto", aspectRatio: 1}}>
-                                    <Bar data={dataLine}></Bar>
+                        <div className="legend">
+                            {projectTypes.map(t => (
+                                <div className="legend-item" key={t.label}>
+                                    <span className="dot" style={{ backgroundColor: typeColors[t.label] }} />
+                                    <span className="label">{t.label}</span>
+                                    <span className="value">{t.value}</span>
                                 </div>
-                            </div>
-                        </div>
-                    </div>
-                    <hr></hr>
-                    <div className="row">
-                        <div className="col">
-                            <h1 style={{textAlign:"center", marginBottom:"1rem"}}>Projetos em andamento</h1>
-                            <div style={{display:"flex", justifyContent:"space-evenly"}}>
-                                <div style={{display:"inline-block"}}>
-                                    <h3>Projeto</h3>
-                                    <p>Portal Corporativo</p>
-                                    <p>Sistema de Gestão</p>
-                                    <p>Segurança de Rede</p>
-                                    <p>Loja Virtual</p>
-                                    <p>Gestão de Estoque</p>
-                                </div>
-                                <div style={{display:"inline-block"}}>
-                                    <h3>Cliente</h3>
-                                    <p>NovaTech</p>
-                                    <p>Alpha Solutions</p>
-                                    <p>CKMT Corp.</p>
-                                    <p>Orion Commerce</p>
-                                    <p>BluePeak</p>
-                                </div>
-                                <div style={{display:"inline-block"}}>
-                                    <h3>Tipo</h3>
-                                    <p>Website</p>
-                                    <p>Sistema de Gestão</p>
-                                    <p>Segurança</p>
-                                    <p>Website</p>
-                                    <p>Sistema de Gestão</p>
-                                </div>
-                                <div style={{display:"inline-block"}}>
-                                    <h3>Progresso</h3>
-                                    <p style={{color:"green"}}>15%</p>
-                                    <p style={{color:"green"}}>92%</p>
-                                    <p style={{color:"green"}}>52%</p>
-                                    <p style={{color:"green"}}>66%</p>
-                                    <p style={{color:"green"}}>67%</p>
-                                </div>
-                                <div style={{display:"inline-block"}}>
-                                    <h3>Prazo</h3>
-                                    <p>12/10/2026</p>
-                                    <p>18/10/2026</p>
-                                    <p>08/10/2026</p>
-                                    <p>02/11/2026</p>
-                                    <p>15/11/2026</p>
-                                </div>
-                                <div style={{display:"inline-block"}}>
-                                    <h3>Status</h3>
-                                    <p>Em andamento</p>
-                                    <p>Em andamento</p>
-                                    <p>Pausado</p>
-                                    <p>Planejamento</p>
-                                    <p>Não iniciado</p>
-                                </div>
-                            </div>
+                            ))}
                         </div>
                     </div>
                 </div>
-            </ContactsProvider>
-        </div>
+            </div>
+
+            <div className="card">
+                <h2 className="card-title">Projetos em andamento</h2>
+                <div className="table-scroll">
+                    <table className="table">
+                        <thead>
+                            <tr>
+                                <th>Projeto</th>
+                                <th>Cliente</th>
+                                <th>Tipo</th>
+                                <th>Progresso</th>
+                                <th>Prazo</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {ongoing.map(row => (
+                                <tr key={row.project}>
+                                    <td className="strong">{row.project}</td>
+                                    <td className="muted">{row.client}</td>
+                                    <td><Pill label={row.type} color={typeColors[row.type]} /></td>
+                                    <td>
+                                        <div className="progress">
+                                            <div className="progress-track">
+                                                <div className="progress-bar" style={{ width: `${row.progress}%`, backgroundColor: colors.primary }} />
+                                            </div>
+                                            <span className="progress-value">{row.progress}%</span>
+                                        </div>
+                                    </td>
+                                    <td className="faint">{row.deadline}</td>
+                                    <td><Pill label={row.status} color={statusColors[row.status]} /></td>
+                                </tr>
+                            ))}
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </Layout>
     );
 }
 
