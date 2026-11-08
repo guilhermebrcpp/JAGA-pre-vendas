@@ -1,7 +1,8 @@
 .dashboardbutton {
-    background-color: white;
+    /*background-color: white;*/
+    background-color: rgb(52, 80, 107);
     color: black;
-    font-weight: 700;
+    font-weight: 500;
     /*padding-top: 0px;
     margin-bottom: 0.5rem;*/
     align-items: center;
@@ -13,13 +14,18 @@
     margin-bottom: 0px;
     text-decoration: none;
     text-align: left;
-    color: black;
+    color: white;
     margin-left: 0.5rem;
+    display: inline-block;
 }
 
 .dashboardbutton:hover{
-    background-color: grey;
-    border-radius: 0.25rem 0.25rem 0.25rem 0.25rem;
+    background-color: rgb(23, 30, 37);
+}
+
+.DashBoardIcon{
+    font-size: 2rem;
+    color: white;
 }
 
 .chamado_button:hover{

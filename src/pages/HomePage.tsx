@@ -1,4 +1,5 @@
 import DashBoard from "../components/DashBoard";
+import pfp from "../assets/pfp.png"
 import {Line, Bar, Pie} from "react-chartjs-2";
 import "../context/ContactsContext.tsx";
 import {
@@ -14,6 +15,7 @@ import {
     ArcElement
 } from "chart.js"
 import { ContactsProvider, useContacts } from "../context/ContactsContext.tsx";
+import { useEffect, useState } from "react";
 
 ChartJS.register(
     CategoryScale, 
@@ -42,7 +44,8 @@ const data = {
   ],
 };
 
-const dataLine = {
+/*
+let dataLine = {
   labels: ['Julho', "Agosto", "Setembro", "Outubro"],
   datasets: [
     {
@@ -53,20 +56,70 @@ const dataLine = {
       ]
     },
   ],
-};
+};*/
 
+async function teste_api(){
+    const url = "https://pokeapi.co/api/v2/pokemon/gengar"
+    const info = await fetch(url)
+    const json = await info.json()
+    //alert(json["id"])
+    return json["id"]
+}
+
+import { ArrowSprintRegular } from '@fluentui/react-icons';
 
 function HomePage(){
+    const [dataLine, setDataLine] = useState({
+        labels: ['teste', "teste", "teste", "teste"],
+        datasets: [
+            {
+            label: 'Clientes Novos',
+            data: [1, 2, 3, 4],
+            backgroundColor: [
+                'rgb(43, 145, 213)'
+            ]
+            },
+        ],
+        });
+
+    useEffect(() => {
+        async function merda(){
+            const url = "https://pokeapi.co/api/v2/pokemon/pikachu"
+            const info = await fetch(url)
+            const json = await info.json()
+
+            setDataLine({
+            labels: ['Julho', "Agosto", "Setembro", "Outubro"],
+            datasets: [
+                {
+                label: 'Clientes Novos',
+                data: [json["id"], 12, 8, 6],
+                backgroundColor: [
+                    'rgb(43, 145, 213)'
+                ]
+                },
+            ],
+            })
+        }
+
+        merda()
+    }, []);
+
     const {contacts} = useContacts();
     const frase = contacts[0].name;
     const clients_total_count = contacts.length;
-
     return(
         <div>
             <ContactsProvider>
                 <DashBoard></DashBoard>
-                <div style={{overflow:"auto", height:"100vh", border:"3px solid black", padding:"2rem", paddingTop:"1rem"}}>
-                    
+                <div style={{overflow:"auto", height:"100vh", padding:"2rem", paddingTop:"1rem"}}>
+                    <div style={{display:"flex"}}>
+                        <p>Bem vindo Moreno</p>
+                        <div style={{marginLeft:"auto", display:"flex", alignItems:"center"}}>
+                            <img src={pfp} height="75rem"></img>
+                            <p style={{margin:"0rem", marginLeft:"0.5rem"}}>Usuario</p>
+                        </div>
+                    </div>
                     <div className="row">
                         <div className="col">
                             <div style={{display:"flex", justifyContent:"space-evenly"}}>
